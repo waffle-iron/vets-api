@@ -1,6 +1,7 @@
 require "simplecov"
 
 SimpleCov.start do
+  track_files "app/**/*.rb"
   SimpleCov.minimum_coverage_by_file 90
 end
 

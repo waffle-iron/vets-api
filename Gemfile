@@ -37,6 +37,8 @@ group :development, :test do
   gem 'webmock'
   gem 'pry-nav'
   gem 'fakeredis'
+  gem 'vcr'
+  gem 'capybara-webkit'
 end
 
 group :development do
