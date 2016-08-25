@@ -30,7 +30,7 @@ module VetsAPI
 
     config.api_only = true
     config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Headers' => 'Authorization',
+      'Access-Control-Allow-Credentials' => 'true'
     }
   end
 end
