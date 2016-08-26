@@ -141,6 +141,7 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    ox (2.4.4)
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
@@ -292,6 +293,7 @@ DEPENDENCIES
   guard-rubocop
   httpclient
   json-schema
+  ox (~> 2.4)
   pg
   pry-nav
   puma (~> 2.16.0)
