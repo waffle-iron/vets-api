@@ -29,5 +29,9 @@ module VetsAPI
     # config.i18n.default_locale = :de
 
     config.api_only = true
+
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Headers' => 'Authorization'
+    }
   end
 end
