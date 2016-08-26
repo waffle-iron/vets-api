@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # cors preflight routes:
+  match '/v0/*path', to: 'application#cors_preflight', via: [:options]
+
   get '/saml/metadata', to: 'saml#metadata'
   get '/auth/saml/callback', to: 'v0/sessions#saml_callback', module: 'v0'
   post '/auth/saml/callback', to: 'v0/sessions#saml_callback', module: 'v0'
@@ -7,11 +10,11 @@ Rails.application.routes.draw do
   namespace :v0, defaults: {format: 'json'} do
     resource :sessions, only: [:new, :destroy] do
       get :saml_callback, to: 'sessions#saml_callback'
-      match 'current', to: 'sessions#show', via: [:get, :options]
+      get 'current', to: 'sessions#show'
     end
 
-    match 'user', to: 'users#show', via: [:get, :options]
-    match 'profile', to: 'users#show', via: [:get, :options]
+    get 'user', to: 'users#show'
+    get 'profile', to: 'users#show'
 
     get 'welcome', to: 'example#welcome', as: :welcome
     get 'status', to: 'admin#status'
