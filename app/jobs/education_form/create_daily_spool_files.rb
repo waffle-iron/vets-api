@@ -10,19 +10,17 @@ module EducationForm
     WINDOWS_NOTEPAD_LINEBREAK = "\r\n"
 
     def run(day = Date.yesterday)
-      # TODO: add and use the mapping of schools/regions -> spool file
-
       records = EducationBenefitsClaim.unprocessed_for(day)
+      regional_files = {}
 
-      records.each do |record|
-        format_application(record)
-      end.join(WINDOWS_NOTEPAD_LINEBREAK)
-
-      Tempfile.create('education_spoolfile') do |f|
-        f.write dev_spool_output
-        # if you want to roughly(ish) see what the generated image looks like
-        # convert -pointsize 10 -density 200 -depth 8 -font Courier text:#{f.path} sample.win.tiff
+      records.map do |record|
+        form = record.open_struct_form
+        region_key = EducationFacility.region_for(form)
+        regional_files[region_key] ||= []
+        regional_files[region_key] << format_application(form)
       end
+
+      puts regional_files
 
       # TODO: SFTP the generated file(s)
       # TODO: Mark the applications as processed once the send is successful
@@ -30,9 +28,9 @@ module EducationForm
       true
     end
 
-    def format_application(application)
+    def format_application(form)
       @application_template ||= ERB.new(TEMPLATE, nil, '-')
-      @applicant = application.open_struct_form
+      @applicant = form
       # the spool file has a requirement that lines be 80 bytes (not characters), and since they
       # use windows-style newlines, that leaves us with a width of 78
       wrapped = word_wrap(@application_template.result(binding), line_width: 78)
@@ -66,7 +64,8 @@ module EducationForm
     def full_address(address)
       return '' if address.nil?
       if address.country == 'USA'
-        "#{address.street}\n        #{address.city}, #{address.state}, #{address.zipcode}".upcase
+        "#{address.street}
+        #{address.city}, #{address.state}, #{address.zipcode}".upcase
       end
     end
 
