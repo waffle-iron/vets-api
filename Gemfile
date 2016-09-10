@@ -50,6 +50,7 @@ group :test do
   gem 'fakeredis'
   gem 'json-schema'
   gem 'vcr'
+  gem 'equivalent-xml', '~> 0.6'
 end
 
 group :development do

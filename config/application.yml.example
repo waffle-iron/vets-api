@@ -6,3 +6,4 @@ CERTIFICATE_FILE: ~/.certs/vetsgov-localhost.crt
 KEY_FILE: ~/.certs/vetsgov-localhost.key
 REDIS_HOST: localhost
 REDIS_PORT: "6379"
+MVI_WSDL_PATH: '../devops/soap/mvi/IdmWebService_200VGOV.wsdl'
