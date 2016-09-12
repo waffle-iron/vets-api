@@ -37,7 +37,8 @@ module VetsAPI
 
     # TODO(#45): add rack-cors middleware to streamline CORS config
     config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Headers' => 'Authorization'
+      'Access-Control-Allow-Headers' => 'Authorization',
+      'Access-Control-Allow-Origin' => 'http://localhost:3000'
     }
 
     config.middleware.use "OliveBranch::Middleware"
